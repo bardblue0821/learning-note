@@ -4,10 +4,32 @@
 ## Next.js の主な機能
 - プリレンダリング
   - SSR: Server Side Rendering ![alt text](image.png)
-  - SSG: Static Site Generation: 静的生成、ビルド時にレンダリングする
-  - ISR: Incremental Static Regeneration： SSG の進化版。SSGのようにHTMLをビルド時に生成するが、「公開後も必要に応じて静的ページを再生成できる」仕組み。
+    - 例: ニュースサイトなど、頻繁に更新されるサイト
+  - SSG: Static Site Generation: 
+    - 静的生成、ビルド時にレンダリングする。
+    - npm run build で作成する。
+    - 倉庫にHTMLファイルをあらかじめ置いておくイメージ。
+    - 例: 採用サイトなど、頻繁に更新されないサイト
+  - ISR: Incremental Static Regeneration： 
+    - SSG の進化版。
+    - SSGのようにHTMLをビルド時に生成するが、「公開後も必要に応じて静的ページを再生成できる」仕組み。
+    - 静的だけど、一定間隔で更新。
+    - 例: 
   - CSR: Client-side Rendering: ブラウザ上で JS を実行し、DOMを生成する。useEffect などをしようする。
   - RSC: React Server Components: 
+
+| 方式 | HTMLを作るタイミング  | 速さ | SEO | データ鮮度 |
+| --- | -------------------: | ---: | ---: | ---------: |
+| SSR | リクエスト時          | △   | ◎   | ◎        |
+| SSG | ビルド時              | ◎   | ◎   | △        |
+| ISR | ビルド＋後更新        | ◎   | ◎   | ○        |
+| CSR | ブラウザ側            | ○   | △   | ◎        |
+
+- ユーザーアクセス → HTMLはいつ作る？
+  - SSR → アクセス時
+  - SSG → デプロイ前
+  - ISR → 基本は事前 + 定期更新
+  - CSR → ブラウザで作る
 
 - ファイルベースルーティング（ダイナミックルート）
 - API 作成（API Route）
@@ -29,7 +51,7 @@
   - ルーティング = URL で送信されたリクエストに対して、どのプログラムを実行するか紐づけること
 - 動的ルーティング
   - /pages/blog/[number].js = /pages/blog/1 で
-  - 同じ改装に固定の名称があれば、優先される。
+  - 同じ階層に固定の名称があれば、優先される。
   - useRouter フックで取得可能
 ```JavaScript
 import { useRouter } from "next/router";
