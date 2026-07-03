@@ -1,0 +1,4 @@
+venv/
+speaker-recognition-dataset.zip
+model.keras
+16000_pcm_speeches/
